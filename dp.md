@@ -1,5 +1,5 @@
+## [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 
-## 300. Longest Increasing Subsequence
 ```python
     def lengthOfLIS(self, nums: List[int]) -> int:
         def bisect_left(arr, x):
