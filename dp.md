@@ -1,6 +1,8 @@
 ## [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 
 ```python
+    # dp+bs Time Complexity O(nlogn)
+    # dp[i[ is smallest last number of increasing sequence with length i+1
     def lengthOfLIS(self, nums: List[int]) -> int:
         def bisect_left(arr, x):
             left, right = 0, len(arr)
@@ -19,3 +21,19 @@
                 loc = bisect_left(dp, num)
                 dp[loc] = num
         return len(dp)
+    #Regular dp ,O(n^2)
+    # class Solution:
+    #     def lengthOfLIS(self, nums: List[int]) -> int:
+    #         n = len(nums)
+    #         dp = [0]*n
+    #         #dp[i] is the length of longest increasing sequence that ends with nums[i]
+    #         dp[0] = 1
+    #         target = 1
+    #         for i in range(1,n):
+    #             temp = 0
+    #             for j in range(i):
+    #                 if nums[i]>nums[j]: temp = max(temp, dp[j]+1)
+    #             if temp == 0: temp = 1
+    #             dp[i] = temp  
+    #             target = max(target,dp[i])
+    #         return target
