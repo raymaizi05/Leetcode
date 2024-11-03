@@ -22,7 +22,8 @@
                 loc = bisect_left(dp, num)
                 dp[loc] = num
         return len(dp)
-    #Regular dp ,O(n^2)
+
+    Regular dp ,O(n^2)
     #         n = len(nums)
     #         dp = [0]*n
     #         #dp[i] is the length of longest increasing sequence that ends with nums[i]
