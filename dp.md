@@ -36,7 +36,7 @@
     #             dp[i] = temp  
     #         return dp[max]
 
-
+```
 ## [673.最长递增子序列的个数](https://leetcode.cn/problems/number-of-longest-increasing-subsequence/description/)
 ```python
 
@@ -67,7 +67,7 @@ class Solution:
         print(cnt)
         return sum(cnt[i] for i in range(n) if dp[i] == max(dp))
 
-
+```
 ## [354. 俄罗斯套娃信封问题](https://leetcode.cn/problems/russian-doll-envelopes/description/)
 
 ```python
@@ -89,7 +89,7 @@ class Solution:
         return len(dp)
 
 
-
+```
 ## [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/description/)
 ```python
 
@@ -108,3 +108,4 @@ class Solution:
         print(dpmax)
         print(dpmin)
         return max(dpmax)
+```
