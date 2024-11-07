@@ -109,3 +109,16 @@ class Solution:
         print(dpmin)
         return max(dpmax)
 ```
+## [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
+```python
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+
+        n = len(nums)
+        dp = [0]*n
+        dp[0] = nums[0]
+        for i in range(1,n):
+            dp[i] = max(dp[i-1]+nums[i],nums[i])
+                
+        return max(dp)
+```
