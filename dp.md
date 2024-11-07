@@ -122,3 +122,24 @@ class Solution:
                 
         return max(dp)
 ```
+## [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/description/)
+```python
+class Solution:
+    def maxSubarraySumCircular(self, nums: List[int]) -> int:
+
+        n = len(nums)
+        dpmax = [0]*n
+        dpmax[0] = nums[0]
+        total_sum = nums[0]
+        for i in range(1,n):
+            total_sum += nums[i]
+            dpmax[i] = max(dpmax[i-1]+nums[i],nums[i])
+
+        dpmin = [0]*n
+        dpmin[0] = nums[0]
+        for i in range(1,n):
+            dpmin[i] = min(dpmin[i-1]+nums[i],nums[i])
+            
+        if min(dpmin)==total_sum: return max(dpmax)
+        else: return max(max(dpmax),total_sum-min(dpmin))
+```
