@@ -143,3 +143,41 @@ class Solution:
         if min(dpmin)==total_sum: return max(dpmax)
         else: return max(max(dpmax),total_sum-min(dpmin))
 ```
+
+
+## [面试题 17.24. 最大子矩阵](https://leetcode.cn/problems/max-submatrix-lcci/description/)
+```python
+from typing import List
+
+class Solution:
+    def getMaxMatrix(self, matrix: List[List[int]]) -> List[int]:
+        if not matrix or not matrix[0]:
+            return []
+        
+        n, m = len(matrix), len(matrix[0])
+        max_sum = float('-inf')
+        result = [0, 0, 0, 0]  # [r1, c1, r2, c2]
+
+        for r1 in range(n):
+            # Initialize an array to hold the sum of columns
+            col_sum = [0] * m
+            for r2 in range(r1, n):
+                for c in range(m):
+                    col_sum[c] += matrix[r2][c]
+
+                # Now find the max subarray in col_sum using Kadane's algorithm
+                current_sum = 0
+                start_col = 0
+                for c in range(m):
+                    if current_sum <= 0:
+                        current_sum = col_sum[c]
+                        start_col = c
+                    else:
+                        current_sum += col_sum[c]
+                    
+                    if current_sum > max_sum:
+                        max_sum = current_sum
+                        result = [r1, start_col, r2, c]
+        
+        return result
+```
