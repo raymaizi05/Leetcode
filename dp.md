@@ -208,3 +208,23 @@ class Solution:
         
         return max(maxSum(slices[1:]), maxSum(slices[0:-1]))
 ```
+## [873. 最长的斐波那契子序列的长度](https://leetcode.cn/problems/length-of-longest-fibonacci-subsequence/description/)
+
+···python
+class Solution:
+    def lenLongestFibSubseq(self, arr: List[int]) -> int:
+        index_map = {num: i for i, num in enumerate(arr)}
+        n = len(arr)
+        dp = {}
+        max_len = 0
+        
+        for i in range(n):
+            for j in range(i):
+                prev_num = arr[i] - arr[j]
+                if prev_num < arr[j] and prev_num in index_map:
+                    k = index_map[prev_num]
+                    dp[(j, i)] = dp.get((k, j), 2) + 1
+                    max_len = max(max_len, dp[(j, i)])
+        
+        return max_len if max_len >= 3 else 0
+```
