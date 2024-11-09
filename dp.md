@@ -40,7 +40,6 @@
 ## [673.最长递增子序列的个数](https://leetcode.cn/problems/number-of-longest-increasing-subsequence/description/)
 ```python
 
-#dp[(j, i)] 表示以 arr[j] 和 arr[i] 结尾的最长斐波那契子序列的长度。
 class Solution:
     def findNumberOfLIS(self, nums: List[int]) -> int:
         n, max_len, ans = len(nums),0 ,0
@@ -211,6 +210,9 @@ class Solution:
 ## [873. 最长的斐波那契子序列的长度](https://leetcode.cn/problems/length-of-longest-fibonacci-subsequence/description/)
 
 ```python
+
+# dp[(j, i)] 表示以 arr[j] 和 arr[i] 结尾的最长斐波那契子序列的长度。
+
 class Solution:
     def lenLongestFibSubseq(self, arr: List[int]) -> int:
         index_map = {num: i for i, num in enumerate(arr)}
