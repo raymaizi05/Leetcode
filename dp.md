@@ -181,3 +181,30 @@ class Solution:
         
         return result
 ```
+## [1388. 3n 块披萨](https://leetcode.cn/problems/pizza-with-3n-slices/description/)
+环状数组中取不相邻的最大子集和
+
+```python
+class Solution:
+    def maxSizeSlices(self, slices: List[int]) -> int:
+        def maxSum(arr):
+            n = len(arr)
+            m = (n+1) // 3
+            print(m,n)
+            dp = [[-10**9] * (m + 1) for _ in range(n)]
+            dp[0][0] ,dp[0][1] = 0, arr[0]
+            dp[1][0] ,dp[1][1] = 0, max(arr[0],arr[1])
+            for i in range(2, n):
+                dp[i][0] = 0
+                for j in range(1, m + 1):
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 2][j - 1] + arr[i])
+            
+            return dp[n-1][m]
+
+        # Considering the array as a circle, solve the problem twice:
+        # 1. Without the first element
+        # 2. Without the last element
+        # Return the maximum of the two results
+        
+        return max(maxSum(slices[1:]), maxSum(slices[0:-1]))
+```
