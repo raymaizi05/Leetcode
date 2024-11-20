@@ -264,3 +264,34 @@ class Solution:
     def twoEggDrop(self, n: int) -> int:
         return ceil((sqrt(n * 8 + 1) - 1) / 2)
 ```
+
+Method2: 动态规划 + 二分查找
+dp[i][j]为i个鸡蛋，j层楼的最少次数 有通项dp[i][j] = min(dp[i][j], max(dp[i][j-t], dp[i-1][t-1])+1), 但是复杂度为O(k*n^2)会超时
+所以应该用记忆化的dp+binary search
+```python
+class Solution:
+    def superEggDrop(self, k: int, n: int) -> int:
+        #i eggs and j floor
+        @cache
+        def dfs(i,j):
+            if i==1 : return j
+            elif j==0: return 0
+            else: 
+                low,high = 1, j
+                while low < high:
+                    mid = (low+high)//2
+
+                    left = dfs(i,j-mid)
+                    right = dfs(i-1,mid-1)
+
+                    if left == right:
+                        low = high = mid
+                    elif left<right:
+                        high = mid
+                    else: 
+                        low = mid+1
+                ans = 1 + max( dfs(i,j-low), dfs(i-1,low-1) )
+
+            return ans
+        return dfs(k,n)
+```
