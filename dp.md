@@ -254,3 +254,13 @@ class Solution:
                 break
         return i
 ```
+
+对于j = 2的情况, 假设需要操作n次，那么第一次扔在n楼； 第二次扔在 n+ (n-1) 楼，因为即使碎了也只需要 2+ n-2 = n次； 第三次扔在n + (n-1) + (n-2) 楼
+
+因此答案是最小的n，使得n*(n+1)/2> target
+
+```python
+class Solution:
+    def twoEggDrop(self, n: int) -> int:
+        return ceil((sqrt(n * 8 + 1) - 1) / 2)
+```
