@@ -230,3 +230,22 @@ class Solution:
         
         return max_len if max_len >= 3 else 0
 ```
+## [887. 鸡蛋掉落](https://leetcode.cn/problems/super-egg-drop/description/)
+
+```python
+# Method1: 考虑如果已知有j个鸡蛋，可以操作i次，n最多是多少，然后找到最小使f(i,j)>=n的i即可
+# 考虑2个鸡蛋的情况，如果可以操作5次： 那么第一次应该仍在5楼，因为即使碎掉，也只需1+4 = 5次来确定，这是一个f(4,1)的子问题；如果没碎，就转化为了f(4,2)的子问题；这样f(5,2) = 1 + f(4,1) + f(4,2)
+
+@cache
+def dfs(i,j):
+    if i==0 or j==0: return 0
+    else:
+        return dfs(i-1,j-1)+1+dfs(i-1,j)
+
+class Solution:
+    def superEggDrop(self, k: int, n: int) -> int:
+        for i in count(1):
+            if dfs(i,k)>=n:
+                break
+        return i
+```
