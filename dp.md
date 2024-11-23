@@ -295,3 +295,27 @@ class Solution:
             return ans
         return dfs(k,n)
 ```
+[64.最小路径和](https://leetcode.cn/problems/minimum-path-sum/solutions/)
+```python
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        dp = [[0 for _ in range(n)]for _ in range(m)]
+        dp[0][0] = grid[0][0]
+        temp = 0
+        for s in range(m):
+            temp += grid[s][0]
+            dp[s][0] = temp 
+
+        temp = 0
+        for t in range(n):
+            temp += grid[0][t]
+            dp[0][t] = temp   
+
+        for i in range(1,m):
+            for j in range(1,n):
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j] 
+
+        return dp[-1][-1]
+```
