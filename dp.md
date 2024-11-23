@@ -319,3 +319,16 @@ class Solution:
 
         return dp[-1][-1]
 ```
+[55.跳跃游戏](https://leetcode.cn/problems/jump-game/description/)
+```python
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if n==1: return True
+        temp = 0
+        for i in range(n-1):
+            if temp< i: return False
+            temp = max(temp,i+nums[i])
+            if temp >= n-1: return True
+        return False
+```
