@@ -332,3 +332,29 @@ class Solution:
             if temp >= n-1: return True
         return False
 ```
+[45.跳跃游戏II]([https://leetcode.cn/problems/jump-game/description/](https://leetcode.cn/problems/jump-game-ii/))
+[每次找到可到达的最远位置，就可以在线性时间内得到最少的跳跃次数。]
+```python
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+
+        n = len(nums)
+        if n==1 : return 0
+        counter = 0
+        temp = 0
+        i = 0
+        while i <= n-2:
+            print(i)
+            counter +=1
+            temp = i + nums[i]
+            if temp>=n-1: return counter
+            if nums[i] ==1 : i = i+1
+            else:
+                temp_idx = i+1
+                temp_val = nums[i+1]+i
+                for j in range(i+1, temp+1):
+                    if nums[j]+j>= temp_val: 
+                        temp_idx = j
+                        temp_val = nums[j]+j
+                i = temp_idx
+```
