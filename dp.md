@@ -332,7 +332,7 @@ class Solution:
             if temp >= n-1: return True
         return False
 ```
-[45.跳跃游戏II](https://leetcode.cn/problems/jump-game/description/](https://leetcode.cn/problems/jump-game-ii/)
+[45.跳跃游戏II](https://leetcode.cn/problems/jump-game-ii/)
 
 每次找到可到达的最远位置，就可以在线性时间内得到最少的跳跃次数。
 ```python
