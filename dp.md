@@ -359,3 +359,56 @@ class Solution:
                         temp_val = nums[j]+j
                 i = temp_idx
 ```
+[131.分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
+```python
+#dp[i][j] 表示s[i:j]是否为palidrome
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        dp = [[True]*(n) for _ in range(n)]
+
+        for i in range(n-1,-1,-1):
+            for j in range(i+1,n):
+                dp[i][j] = dp[i+1][j-1] and s[i]==s[j]
+        
+        ret = list()
+        ans = list()
+
+        def dfs(i):
+            if i==n:
+                ret.append(ans[:])
+                return 
+            for j in range(i,n):
+                if dp[i][j]:
+                    ans.append(s[i:j+1])
+                    dfs(j + 1)
+                    ans.pop()
+        dfs(0)
+        return ret
+
+```
+
+[132.分割回文串2](https://leetcode.cn/problems/palindrome-partitioning-ii/description/)
+```python
+#f[i]= 0≤j<imin{f[j]}+1,其中 s[j+1..i] 是一个回文串
+
+class Solution:
+    def minCut(self, s: str) -> int:
+        n = len(s)
+        dp1 = [[True]* n for _ in range(n)]
+        
+        for i in range(n-1, -1, -1):
+            for j in range(i+1 , n):
+                dp1[i][j] = dp1[i+1][j-1] and s[i]==s[j]
+
+        dp2 = [10000]* n
+        for i in range(n):
+            if dp1[0][i]:
+                dp2[i] = 0
+            else:
+                for j in range(i):
+                    if dp1[j+1][i]:
+                        dp2[i] = min(dp2[i],dp2[j]+1)
+        
+        return dp2[n-1]
+```
