@@ -1,9 +1,12 @@
 Queue 
 
-Given array and fixed window , return the rolling max
+Given array and fixed window , return the rolling max. O(n)
+
 
 ```python
+from collections import deque
 def sliding_window_max(nums, k):
+    #Maintain a decreasing deque
     if not nums or k <= 0:
         return []
 
@@ -23,16 +26,8 @@ def sliding_window_max(nums, k):
         # 将当前索引加入队列
         max_indices.append(i)
 
-        # 记录窗口最大值
-        if i >= k - 1:
-            result.append(nums[max_indices[0]])
+        result.append(nums[max_indices[0]])
 
     return result
-
-# 测试
-nums = [1, 3, 5, 2, 8, 7, 9, 6]
-k = 3
-print(sliding_window_max(nums, k))  # 输出: [5, 5, 8, 8, 9, 9]
-
 
 ```
