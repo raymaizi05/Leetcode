@@ -412,3 +412,43 @@ class Solution:
         
         return dp2[n-1]
 ```
+[戳气球](https://leetcode.cn/problems/burst-balloons/description/)
+```python
+class Solution:
+    #    两端插入1方便操作
+    #    dp[i][j]表示戳爆i和j之间（开区间）所有气球能得到的金币，k表示(i,j)中间最后戳爆的那一个
+    def maxCoins(self, nums: List[int]) -> int:
+        nums.insert(0,1)
+        nums.insert(len(nums),1)
+        n = len(nums)
+        dp = [[0]*n for _ in range(n)]
+
+        for window in range(2, n):
+            for i in range(0,n-window):
+                for k in range(i+1,i+window):
+                    dp[i][i+window] = max(dp[i][i+window], dp[i][k]+dp[k][i+window]+ nums[i]*nums[k]*nums[i+window])
+        return dp[0][n-1]
+```
+
+
+[最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
+
+```python
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+
+        # dp[i][j] : text1[0:i] ; text2[0:j]的最长公共子序列
+        <img width="538" alt="Screenshot 2024-12-05 at 11 39 01" src="https://github.com/user-attachments/assets/343c5a9c-2904-4247-8e3a-4bdbdba4729e">
+
+        m,n = len(text1), len(text2)
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        
+        for j in range(1,n+1):
+            for i in range(1,m+1):
+                if text1[i-1] == text2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]+1
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
+        return dp[m][n]
+```
