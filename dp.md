@@ -438,6 +438,7 @@ class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
 
         # dp[i][j] : text1[0:i] ; text2[0:j]的最长公共子序列
+        # dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1]==text2[j-1] else max(dp[i-1][j], dp[i][j-1])
         <img width="538" alt="Screenshot 2024-12-05 at 11 39 01" src="https://github.com/user-attachments/assets/343c5a9c-2904-4247-8e3a-4bdbdba4729e">
 
         m,n = len(text1), len(text2)
