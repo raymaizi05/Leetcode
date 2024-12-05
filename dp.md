@@ -453,3 +453,19 @@ class Solution:
 
         return dp[m][n]
 ```
+[最长重复字串](https://leetcode.cn/problems/longest-repeating-substring/description/)
+dp[i][j]是两个分别以i和j结尾的相同子串的最大长度，其中i永远小于j。所有状态的值均初始化为0，状态转移时，如果s[i]和s[j]不同就不必管，因为以i结尾和以j结尾不会是相同子串，如果s[i]和s[j]相同，那么dp[i][j]就等于dp[i-1][j-1]+1
+
+```python
+class Solution:
+    def longestRepeatingSubstring(self, s: str) -> int:
+        n = len(s)
+        dp = [[0]*n for _ in range(n)]
+        ans = 0
+        for i in range(n):
+            for j in range(i+1,n):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i-1][j-1] + 1 
+                    ans = max(ans, dp[i][j])
+        return ans
+```
