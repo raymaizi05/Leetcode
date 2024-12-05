@@ -469,3 +469,21 @@ class Solution:
                     ans = max(ans, dp[i][j])
         return ans
 ```
+[最长重复字数组](https://leetcode.cn/problems/maximum-length-of-repeated-subarray/)
+```python
+class Solution:
+    def findLength(self, nums1: List[int], nums2: List[int]) -> int:
+        m = len(nums1)
+        n = len(nums2)
+        ans = 0 
+        # dp[i][j] is nums1[0:i] , nums2[0:j]里最大的重复字数组
+        dp = [[0]* (n+1) for _ in range(m+1)]
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                if nums1[i-1] == nums2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + 1
+                    ans = max(ans, dp[i][j])
+                    
+        return ans
+
+```
