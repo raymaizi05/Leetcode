@@ -508,3 +508,24 @@ class Solution:
         return dp[0][0]
 
 ```
+【115.不同的子序列](https://leetcode.cn/problems/distinct-subsequences/description/)
+```python
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        #dp[i][j] 表示在 s[i:]的子序列中t[j:]出现的个数
+        #倒着递推
+        #如果s[i] = t[j], 可以选择与之匹配，那么就是dp[i+1][j+1]； 也可以不匹配，那么就是dp[i+1][j]
+        m,n = len(s), len(t)
+        if m<n : return 0
+
+        dp = [[0]* (n+1) for _ in range(m+1)]
+        for j in range(n-1,-1,-1):
+            for i in range(m-n+j,-1,-1):
+                if s[i] == t[j]: 
+                    dp[i][j] = dp[i+1][j+1] + dp[i+1][j]
+                    if j==n-1: dp[i][j] = dp[i+1][j] + 1
+                else: dp[i][j] = dp[i+1][j]
+        return dp[0][0]
+
+
+```
