@@ -553,6 +553,27 @@ class Solution:
         return dp[m][n]
 
 ```
+
+[712. 两个字符串的最小ASCII删除和](https://leetcode.cn/problems/minimum-ascii-delete-sum-for-two-strings/description/)
+```python
+class Solution:
+    def minimumDeleteSum(self, s1: str, s2: str) -> int:
+        m = len(s1)
+        n = len(s2)
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        for s in range(1,m+1):
+            dp[s][0] = dp[s-1][0] + ord(s1[s-1])
+        for t in range(1,n+1):
+            dp[0][t] = dp[0][t-1] + ord(s2[t-1]) 
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                if s1[i-1] == s2[j-1]: 
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j]+ord(s1[i - 1]), dp[i][j-1] + ord(s2[j-1]))
+        
+        return dp[m][n]
+```
 [91. 解码方法](https://leetcode.cn/problems/decode-ways/description/)
 ```python
 class Solution:
