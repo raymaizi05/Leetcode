@@ -487,3 +487,24 @@ class Solution:
         return ans
 
 ```
+[174. 地下城游戏](https://leetcode.cn/problems/dungeon-game/description/)
+从右下向左上遍历，因为如果从左上向右下，加的血会影响后续决策。这样的动态规划是不满足「无后效性」的。
+dp[i][j]=max(min(dp[i+1][j],dp[i][j+1])−dungeon(i,j),1)
+
+```python
+
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        m,n = len(dungeon),len(dungeon[0])
+
+        dp = [[float('inf')] * (n + 1) for _ in range(m + 1)]
+        dp[m][n - 1] = dp[m - 1][n] = 1  # 终点右边和下边的假设值
+
+        for i in range(m-1,-1,-1):
+            for j in range(n-1,-1,-1):
+                temp = min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]
+                dp[i][j] = max(temp, 1)
+        
+        return dp[0][0]
+
+```
