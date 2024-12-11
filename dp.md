@@ -587,3 +587,33 @@ class Solution:
                 f[i] += f[i - 2]
         return f[n]
 ```
+[买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)
+# 顺便输出number of trades used.
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        #2k states
+        n = len(prices)
+        dp = [[0]*2*k for _ in range(n)]
+        # 状态2m, 2m+1, m = [0,k-1]
+        # 2m: 完成m次交易的基础上，再进行一次买操作
+        # 2m+1: 完成m+1次操作
+ 
+        for i in range(2*k):
+            if i%2 == 0:
+                dp[0][i] = -prices[0]
+
+        for i in range(1,n):
+            for j in range(2*k):
+                if j%2 == 0:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]- prices[i])
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]+ prices[i])
+        maxProfit = max(dp[-1])
+        total_trades = 0
+        for i in range(2*k):
+            if dp[-1][i] == maxProfit:
+                total_trades = (i+1)//2
+                break
+        print(maxProfit, total_trades)
+        print(dp[-1])
+        return max(dp[-1])
