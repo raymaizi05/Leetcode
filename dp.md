@@ -605,7 +605,9 @@ class Solution:
 ```
 
 [买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)
+
 顺便输出number of trades used.
+```python
 class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         #2k states
@@ -634,3 +636,4 @@ class Solution:
         print(maxProfit, total_trades)
         print(dp[-1])
         return max(dp[-1])
+```
