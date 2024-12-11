@@ -587,8 +587,25 @@ class Solution:
                 f[i] += f[i - 2]
         return f[n]
 ```
+[买卖股票的最佳时机 II]
+```python
+# dp[i][j]， i是天数，j是状态
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        length = len(prices)
+        #dp[i][0]第i天持有股票
+        #dp[i][1]第i天不持有股票 
+        dp = [[0] * 2 for _ in range(length)]
+        dp[0][0] = -prices[0]
+        dp[0][1] = 0
+        for i in range(1, length):
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1] - prices[i]) #注意这里是和121. 买卖股票的最佳时机唯一不同的地方
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
+        return dp[-1][1]
+```
+
 [买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)
-# 顺便输出number of trades used.
+顺便输出number of trades used.
 class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         #2k states
