@@ -412,6 +412,33 @@ class Solution:
         
         return dp2[n-1]
 ```
+
+[516.最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/description/?envType=study-plan-v2&envId=dynamic-programming)
+```python
+
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        n = len(s)
+        # dp[i][j]: longest palindrome from s[i] to s[j]
+        # if s[i] == s[j]: dp[i][j] = dp[i+1][j-1]+2
+        # Else: dp[i][j] = max(dp[i+1][i+j], dp[i][i+j-1])
+
+        
+        dp = [[0]*n for _ in range(n)]
+
+        for i in range(n):
+            for j in range(n):
+                if i==j: dp[i][j] =1 
+
+        for j in range(1,n):
+            for i in range(n-j-1,-1,-1):
+                if s[i] == s[i+j]: dp[i][i+j] = dp[i+1][i+j-1]+2
+                else: dp[i][i+j] = max(dp[i+1][i+j], dp[i][i+j-1])
+
+        return dp[0][n-1]
+
+```
+
 [戳气球](https://leetcode.cn/problems/burst-balloons/description/)
 ```python
 class Solution:
