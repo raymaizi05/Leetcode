@@ -67,6 +67,39 @@ class Solution:
         return sum(cnt[i] for i in range(n) if dp[i] == max(dp))
 
 ```
+
+[最长数对链](https://leetcode.cn/problems/maximum-length-of-pair-chain/description/?envType=study-plan-v2&envId=dynamic-programming)
+```python
+    def findLongestChain(pairs: List[List[int]]) -> int:
+        # Method 1: dp 
+        n = len(pairs)
+        dp = [0]*n
+        dp[0] = 1
+        pairs = sorted(pairs, key = lambda x: x[0])
+        for i in range(1,n):
+            for j in range(i):
+                if pairs[i][0]>pairs[j][1]: dp[i] = max(dp[i], dp[j]+1)
+                else: dp[i] = max(dp[i], dp[j])
+        return dp[-1]
+
+from bisect import bisect_left 
+
+    def findLongestChain( pairs: List[List[int]]) -> int:
+        #method 2: greedy search + binary search
+        n = len(pairs)
+        arr = []
+        pairs = sorted(pairs, key = lambda x:x[0])
+        for i in range(n): 
+            pos = bisect_left(arr, pairs[i][0])
+            if pos < len(arr): 
+                arr[pos] = min(arr[pos],pairs[i][1])
+            else:
+                arr.append(pairs[i][1])
+        return len(arr)
+
+
+
+```
 ## [354. 俄罗斯套娃信封问题](https://leetcode.cn/problems/russian-doll-envelopes/description/)
 
 ```python
