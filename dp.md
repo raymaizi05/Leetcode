@@ -697,3 +697,19 @@ class Solution:
         print(dp[-1])
         return max(dp[-1])
 ```
+[1218. 最长定差子序列](https://leetcode.cn/problems/longest-arithmetic-subsequence-of-given-difference/description/?envType=study-plan-v2&envId=dynamic-programming)
+```python
+from collections import defaultdict
+class Solution:
+    def longestSubsequence(self, arr: List[int], difference: int) -> int:
+        n = len(arr)
+        dp = defaultdict(int)
+        # 以arr[i]为结尾的最长等差子序列的长度
+        # 下标较大的元素对应的dp值不会小于下标较小的元素的dp值
+        for i in range(n):
+            dp[arr[i]] = dp[arr[i]-difference]+1
+        return max(dp.values())
+
+
+
+```
