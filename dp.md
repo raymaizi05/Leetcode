@@ -100,6 +100,33 @@ from bisect import bisect_left
 
 
 ```
+
+
+[1964. 找出到每个位置为止最长的有效障碍赛跑路线](https://leetcode.cn/problems/find-the-longest-valid-obstacle-course-at-each-position/description/?envType=study-plan-v2&envId=dynamic-programming)
+```python
+
+class Solution:
+    def longestObstacleCourseAtEachPosition(self, obstacles: List[int]) -> List[int]:
+        n = len(obstacles)
+        dp = [0] * n  # dp[i] 表示到第 i 个位置的最长障碍路线长度
+        increasing = []  # 维护一个递增的辅助数组
+        
+        for i in range(n):
+            # 找到当前障碍高度的插入点（允许相等的障碍）
+            pos = bisect_right(increasing, obstacles[i])
+            dp[i] = pos + 1  # 障碍序列长度 = 插入位置 + 1
+            
+            # 如果超出 increasing 的长度，追加到末尾
+            if pos == len(increasing):
+                increasing.append(obstacles[i])
+            else:
+                # 更新 increasing[pos] 为当前障碍值（保持递增序列）
+                increasing[pos] = obstacles[i]
+            print(increasing)
+        return dp
+
+
+```
 ## [354. 俄罗斯套娃信封问题](https://leetcode.cn/problems/russian-doll-envelopes/description/)
 
 ```python
