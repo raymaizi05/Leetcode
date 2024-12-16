@@ -713,3 +713,26 @@ class Solution:
 
 
 ```
+[1027. 最长等差数列](https://leetcode.cn/problems/longest-arithmetic-subsequence/?envType=study-plan-v2&envId=dynamic-programming)
+
+```python
+class Solution:
+    def longestArithSeqLength(self, nums: List[int]) -> int:
+
+        def longestSubsequence(arr: List[int], difference: int) -> int:
+            n = len(arr)
+            dp = defaultdict(int)
+            # 以arr[i]为结尾的最长等差子序列的长度
+            # 下标较大的元素对应的dp值不会小于下标较小的元素的dp值
+            for i in range(n):
+                dp[arr[i]] = dp[arr[i]-difference]+1
+            return max(dp.values())
+
+        n = len(nums)
+        nums_range_max = max(nums)-min(nums)
+        result = []
+        for d in range(-nums_range_max, nums_range_max+1):
+            result.append(longestSubsequence(nums, d))
+        return max(result)
+
+```
