@@ -24,3 +24,45 @@ class Solution:
 
 
 ```
+[841. 钥匙和房间](https://leetcode.cn/problems/keys-and-rooms/description/?envType=study-plan-v2&envId=graph-theory)
+```python
+
+def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+    #DFS
+    visited = set()
+    def dfs(room): 
+        m = len(room)
+        for i in range(m):
+            temp = room[i]
+
+            if temp not in visited: 
+                visited.add(temp)
+                dfs(rooms[temp])
+
+    n = len(rooms)
+    
+    dfs(rooms[0])
+
+    visited.add(0)
+    print(visited)
+    return len(visited)==n
+    
+
+def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+    #BFS
+    n = len(rooms)
+    num = 0
+    vis = {0}
+    que = collections.deque([0])
+
+    while que:
+        x = que.popleft()
+        num += 1
+        for it in rooms[x]:
+            if it not in vis:
+                vis.add(it)
+                que.append(it)
+    
+    return num == n
+
+```
