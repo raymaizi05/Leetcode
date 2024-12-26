@@ -31,3 +31,24 @@ def sliding_window_max(nums, k):
     return result
 
 ```
+402. 移掉 K 位数字
+
+```python
+# 维护一个单调递增栈，来保留尽可能小的数字
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        stack = []
+        to_move = k
+        for digit in num:
+            while stack and to_move>0 and stack[-1]>digit:
+                stack.pop()
+                to_move-=1
+            stack.append(digit)
+        while to_move>0:
+            stack.pop()
+            to_move-=1
+        
+        result = "".join(stack).lstrip('0')
+
+        return result if result!= "" else "0"
+```
