@@ -130,3 +130,98 @@ class Solution:
 
 
 ```
+DSatur 算法
+
+个性化歌单推荐系统
+假设你是音乐服务的开发者，为了提高用户体验需要解决推荐歌单的同质化问题，保证推荐给用户的所有歌单不包含相同歌曲。
+给定一个包含 N 个歌单和 M 条歌单重复记录，每个歌单用一个从 1 到 N 的整数编号，歌单重复记录包含两个歌单的 ID，表示两个歌单有相同的歌曲。
+你的任务是对歌单进行合并，找出合并后的最小歌单数量，合并的歌单中不能有相同的歌曲。
+解答要求
+时间限制：C/C++ 1000ms，其他语言：2000ms
+内存限制：C/C++ 256MB，其他语言：512MB
+输入
+第一行包含两个整数 N 和 M，分别表示歌单的数量和有相同歌曲的歌单记录数。
+接下来 M 行，每行包含两个整数编号 X 和 Y，表示编号为 X 和 Y 的歌单有相同的歌曲。
+输入不会出现相同歌单，例如不会出现 “1 1” 这种输入
+输入不会出现多条重复的记录，例如 “1 2” 不会出现多次
+最大歌单数量不超过 100
+歌单有重复歌曲记录数 M 不会超过 1004
+歌单 1 和 2 有相同歌曲，歌单 2 和 3 有相同歌曲，歌单 1 和 3 不一定包含相同歌曲
+输出
+输出一个整数，表示合并后的最小歌单数量
+样例 1
+输入：
+5 6
+1 2
+1 3
+1 4
+2 3
+2 5
+4 5
+输出：
+3
+解释：
+输入有 5 个歌单，歌单编码从 1 到 5；有 6 条重复歌单记录，每一条记录包含了歌单的编码。
+1 和 2 有相同歌曲；1 和 3 有相同歌曲；1 和 4 有相同歌曲；2 和 3 有相同歌曲；2 和 5 有相同歌曲；4 和 5 有相同歌曲。
+输出合并后最小歌单数为 3，合并后的 3 个歌单内没有相同歌曲
+1 和 5 一组；3 和 4 一组；2 一组（或者 1 和 5 一组；2 和 4 一组；3 一组），合并组合可能有多种，只需要输出合并后的最小数。
+样例 2
+输入：
+4 3
+1 2
+1 3
+1 4
+输出：
+2
+解释：2/3/4 一组，没有相同歌曲；1 一组。
+
+···python
+
+# Implementation of the test function
+# 在每一步选择“饱和度（Saturation）”最高的顶点进行着色 如果有多个顶点饱和度相同，则优先选择度数最大的顶点；如果仍然有并列的情况，可以按照顶点编号或其他策略进行打破。
+def min_playlist_count(N, M, edges):
+    from collections import defaultdict
+    
+    # Construct adjacency list
+    graph = defaultdict(set)
+    for x, y in edges:
+        graph[x].add(y)
+        graph[y].add(x)
+    
+    # Initialize
+    color = [-1] * (N + 1)  # Color array, -1 means uncolored
+    saturation = [0] * (N + 1)  # Saturation array
+    degrees = [len(graph[i]) for i in range(N + 1)]  # Degree array
+    uncolored_nodes = set(range(1, N + 1))  # Set of uncolored nodes
+    
+    while uncolored_nodes:
+        # Find the node with maximum saturation and degree
+        node = max(uncolored_nodes, key=lambda x: (saturation[x], degrees[x]))
+        # Find the smallest available color for the current node
+        used_colors = {color[neighbor] for neighbor in graph[node] if color[neighbor] != -1}
+        for c in range(N):
+            if c not in used_colors:
+                color[node] = c
+                break
+        # Update the saturation of neighbors
+        for neighbor in graph[node]:
+            if neighbor in uncolored_nodes:
+                saturation[neighbor] += 1
+        # Remove the colored node
+        uncolored_nodes.remove(node)
+    
+    # Return the minimum number of colors used
+    return max(color) + 1
+
+# Test cases
+test_cases = [
+    (5, 6, [(1, 2), (1, 3), (1, 4), (2, 3), (2, 5), (4, 5)]),  # Expected output: 3
+    (4, 3, [(1, 2), (1, 3), (1, 4)]),                        # Expected output: 2
+]
+
+# Execute test cases
+results = [min_playlist_count(N, M, edges) for N, M, edges in test_cases]
+results
+
+
+```
