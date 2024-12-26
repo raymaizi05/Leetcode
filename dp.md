@@ -765,6 +765,7 @@ class Solution:
 ```
 # 背包问题
 [279.完全平方数](https://leetcode.cn/problems/perfect-squares/description/?envType=study-plan-v2&envId=dynamic-programming)
+给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
 ```python
     def numSquares(self, n: int) -> int:
         # dp[i] 和为i的完全平方数的最小数量, dp[i] = min_{j=1}^{sqrt(i)}dp[i-j^2]
