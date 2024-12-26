@@ -767,16 +767,20 @@ class Solution:
 [279.完全平方数](https://leetcode.cn/problems/perfect-squares/description/?envType=study-plan-v2&envId=dynamic-programming)
 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
 ```python
-    def numSquares(self, n: int) -> int:
-        # dp[i] 和为i的完全平方数的最小数量, dp[i] = min_{j=1}^{sqrt(i)}dp[i-j^2]
-        dp = [np.inf]*(n+1)
-        pingfang = set()
-        
-        for i in range(1,n+1):
-            if i < int(np.sqrt(n))+1: pingfang.add(i**2)
-            if i in pingfang : dp[i] = 1
-            for j in range(1,int(np.sqrt(i))+1):
-                dp[i] = min(dp[i],dp[i-j**2]+1)
+def numSquares(self, n: int) -> int:
+    # dp[i] 和为i的完全平方数的最小数量, dp[i] = min_{j=1}^{sqrt(i)}dp[i-j^2]
+    # dp[0] = 0 保证了dp[k**2]一定是1
+    dp = [np.inf]*(n+1)
+    pingfang = []
+    dp[0] = 0
+    for i in range(1,int(np.sqrt(n))+1):
+        pingfang.append(i**2)
 
-        return dp[-1]
+    for i in range(1,n+1):
+        for square in pingfang:
+            if square > i: break
+            dp[i] = min(dp[i],dp[i-square]+1)
+
+    return dp[-1]
+
 ```
