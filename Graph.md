@@ -214,3 +214,119 @@ results
 
 
 ```
+并查集
+
+某公司基地园区很大，里面有 N 个建筑，依次编号为 1 到 N，通过 M 条路将这些建筑连接在一起，这 N 个建筑根据之间的距离，被分为不同的建筑群。云小核喜欢饭后散步，并用步数计算了每条路的长度。经过一段时间的散步，云小核发现了一个规律，两个建筑群间最近的两个建筑之间，步数大于 K 步。两个建筑群之间，可能没有路。云小核把每条路的步数给了你，请你计算园区里有多少个建筑群？
+
+样例 1 
+输入：
+6 5 3
+1 2 1
+1 3 4
+2 4 2
+3 5 3
+3 6 2
+输出：
+2
+样例 2
+复制 输入：5 5 4
+1 2 1
+1 3 4
+2 4 2
+3 5 2
+4 5 5
+输出：
+1
+样例 3
+复制 输入：
+5 3 4
+1 2 1
+2 4 2
+3 5 2
+输出：
+2
+
+```python
+def count_building_groups(n, m, k, edges):
+    """
+    :param n: 建筑数量（1 ~ n）
+    :param m: 道路条数
+    :param k: 建筑群间距离阈值
+    :param edges: 列表，每个元素是 (a, b, d)，
+                  表示建筑 a 与 b 之间的距离为 d
+    :return: 该园区里有多少个建筑群
+    """
+    parent = list(range(n + 1))  # 并查集父节点
+    rank_ = [0] * (n + 1)       # 用于按秩合并
+
+    def find(x):
+        """路径压缩"""
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    def union(a, b):
+        """按秩合并"""
+        rootA = find(a)
+        rootB = find(b)
+        if rootA != rootB:
+            if rank_[rootA] > rank_[rootB]:
+                parent[rootB] = rootA
+            elif rank_[rootA] < rank_[rootB]:
+                parent[rootA] = rootB
+            else:
+                parent[rootB] = rootA
+                rank_[rootA] += 1
+
+    # 将所有距离 <= K 的边进行合并
+    for a, b, d in edges:
+        if d <= k:
+            union(a, b)
+
+    # 统计有多少个不同的根
+    roots = set()
+    for i in range(1, n + 1):
+        roots.add(find(i))
+    return len(roots)
+
+
+def test_all():
+    # 定义所有测试用例
+    # 每个元组：(测试名字, n, m, k, edges, expected)
+    testcases = [
+        (
+            "Sample 1",
+            6, 5, 3,
+            [
+                (1, 2, 1),
+                (1, 3, 4),
+                (2, 4, 2),
+                (3, 5, 3),
+                (3, 6, 2)
+            ],
+            2  # 期望输出
+        ),
+        (
+            "Sample 2",
+            5, 5, 4,
+            [
+                (1, 2, 1),
+                (1, 3, 4),
+                (2, 4, 2),
+                (3, 5, 2),
+                (4, 5, 5)
+            ],
+            1  # 期望输出
+        ),
+        (
+            "Sample 3",
+            5, 3, 4,
+            [
+                (1, 2, 1),
+                (2, 4, 2),
+                (3, 5, 2)
+            ],
+            2  # 期望输出
+        )
+    ]
+```
