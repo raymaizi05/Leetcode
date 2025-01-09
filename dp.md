@@ -784,3 +784,26 @@ def numSquares(self, n: int) -> int:
     return dp[-1]
 
 ```
+[1312. 让字符串成为回文串的最少插入次数](https://leetcode.cn/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/?envType=study-plan-v2&envId=dynamic-programming)
+```python
+
+def minInsertions(self, s: str) -> int:
+    # dp[i][j]: 字符串s[i:j]变成回文串需要的最少插入次数
+    # if s[i] == s[j]: dp[i][j] = dp[i+1][j-1]
+    # if s[i] != s[j]: 要么在第一个加s[j]，要么在最后一个加s[i]，dp[i][j] = 1+min(dp[i+1][j], dp[i][j-1])
+    
+    n = len(s)
+    
+    dp = [[0]*(n) for _ in range(n)]
+
+    for j in range(1,n):
+        for i in range(n-j):
+
+            if s[i]==s[i+j]:
+                dp[i][i+j] = dp[i+1][i+j-1]
+            else:
+                dp[i][i+j] = 1 + min(dp[i+1][i+j], dp[i][i+j-1])
+                
+    return dp[0][n-1]
+
+```
